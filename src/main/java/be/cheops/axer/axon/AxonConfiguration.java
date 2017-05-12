@@ -5,8 +5,6 @@ import org.axonframework.commandhandling.CommandBus;
 import org.axonframework.commandhandling.SimpleCommandBus;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.axonframework.commandhandling.gateway.DefaultCommandGateway;
-import org.axonframework.commandhandling.gateway.IntervalRetryScheduler;
-import org.axonframework.commandhandling.gateway.RetryScheduler;
 import org.axonframework.common.jpa.EntityManagerProvider;
 import org.axonframework.common.transaction.TransactionManager;
 import org.axonframework.eventhandling.EventBus;
@@ -24,14 +22,11 @@ import org.axonframework.spring.config.annotation.AnnotationCommandHandlerBeanPo
 import org.axonframework.spring.config.annotation.SpringParameterResolverFactoryBean;
 import org.axonframework.spring.messaging.unitofwork.SpringTransactionManager;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.transaction.PlatformTransactionManager;
 
 import java.sql.SQLException;
-import java.util.concurrent.ScheduledThreadPoolExecutor;
 
 @EnableAxon
 @Configuration
@@ -43,24 +38,18 @@ class AxonConfiguration {
     }
 
     @Bean
-    public CommandGateway commandGateway(CommandBus commandBus, RetryScheduler scheduler) {
-        return new DefaultCommandGateway(commandBus, scheduler);
+    public CommandGateway commandGateway(CommandBus commandBus/*, RetryScheduler scheduler*/) {
+        return new DefaultCommandGateway(commandBus/*, scheduler*/);
     }
 
-    @Bean
-    public RetryScheduler retryScheduler() {
-        return new IntervalRetryScheduler(new ScheduledThreadPoolExecutor(3), 1000, 5);
-    }
-
-    @Bean
-    public ThreadPoolTaskExecutor executorService(@Value("${thread.pool.size:5}") int threadPoolSize) {
-        ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
-        executor.setCorePoolSize(threadPoolSize);
-        return executor;
-    }
+//    @Bean
+//    public RetryScheduler retryScheduler() {
+//        return new IntervalRetryScheduler(new ScheduledThreadPoolExecutor(3), 1000, 5);
+//    }
 
     /**
-     * for @CommandHandlers in non @Aggregate annotated spring beans
+     * for @{@link org.axonframework.commandhandling.CommandHandler} annotated methods
+     * in regular spring beans (e.g. @{@link org.springframework.stereotype.Component} annotated beans)
      *
      * @return
      */

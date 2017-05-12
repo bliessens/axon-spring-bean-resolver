@@ -17,27 +17,17 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 class ComplaintAggregateConfiguration {
 
-//    @Bean
-//    public AggregateFactory<ComplaintAggregate> complaintAggregateFactory() {
-//        SpringPrototypeAggregateFactory<ComplaintAggregate> prototypeAggregateFactory = new SpringPrototypeAggregateFactory<>();
-//        prototypeAggregateFactory.setPrototypeBeanName("complaintAggregate");
-//        return prototypeAggregateFactory;
-//    }
-//
-//    @Bean("complaintAggregate")
-//    @Scope("prototype")
-//    public ComplaintAggregate complaintAggregate() {
-//        return new ComplaintAggregate();
-//    }
-
     /**
-     * for @CommandHandlers in aggregates (@Aggregate annotated classes)
+     * for @{@link org.axonframework.commandhandling.CommandHandler} annotated methods
+     * and constructors in aggregates types (e.g. @{@link org.axonframework.commandhandling.model.Aggregate} annotated classes)
      *
      * @return
      */
     @Bean
     public AggregateAnnotationCommandHandler<ComplaintAggregate> commandHandler(Repository<ComplaintAggregate> complaintAggregateRepository, MultiParameterResolverFactory parameterResolverFactory) {
-        return new AggregateAnnotationCommandHandler(ComplaintAggregate.class, complaintAggregateRepository, new AnnotationCommandTargetResolver(), parameterResolverFactory);
+        return new AggregateAnnotationCommandHandler(ComplaintAggregate.class, complaintAggregateRepository,
+                new AnnotationCommandTargetResolver(),
+                parameterResolverFactory);
     }
 
     @Bean
