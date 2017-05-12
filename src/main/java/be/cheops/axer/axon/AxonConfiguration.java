@@ -16,18 +16,15 @@ import org.axonframework.eventsourcing.eventstore.EventStorageEngine;
 import org.axonframework.eventsourcing.eventstore.EventStore;
 import org.axonframework.eventsourcing.eventstore.jpa.JpaEventStorageEngine;
 import org.axonframework.eventsourcing.eventstore.jpa.SQLErrorCodesResolver;
-import org.axonframework.messaging.annotation.ParameterResolverFactory;
 import org.axonframework.monitoring.NoOpMessageMonitor;
 import org.axonframework.serialization.json.JacksonSerializer;
 import org.axonframework.serialization.upcasting.event.NoOpEventUpcaster;
 import org.axonframework.spring.config.EnableAxon;
 import org.axonframework.spring.config.annotation.AnnotationCommandHandlerBeanPostProcessor;
-import org.axonframework.spring.config.annotation.SpringBeanParameterResolverFactory;
 import org.axonframework.spring.config.annotation.SpringParameterResolverFactoryBean;
 import org.axonframework.spring.messaging.unitofwork.SpringTransactionManager;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
@@ -62,6 +59,11 @@ class AxonConfiguration {
         return executor;
     }
 
+    /**
+     * for @CommandHandlers in non @Aggregate annotated spring beans
+     *
+     * @return
+     */
     @Bean
     public AnnotationCommandHandlerBeanPostProcessor annotationCommandHandlerBeanPostProcessor() {
         return new AnnotationCommandHandlerBeanPostProcessor();

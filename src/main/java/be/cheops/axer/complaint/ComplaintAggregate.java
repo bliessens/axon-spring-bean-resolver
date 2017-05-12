@@ -26,14 +26,14 @@ class ComplaintAggregate {
     }
 
     @CommandHandler
-    public ComplaintAggregate(RegisterComplaintCommand command /*,CustomerResolver resolver*/) {
-//        Assert.notNull(resolver, () -> "Requires " + CustomerResolver.class.getSimpleName());
+    public ComplaintAggregate(RegisterComplaintCommand command, CustomerResolver resolver) {
+        Assert.notNull(resolver, () -> "Requires " + CustomerResolver.class.getSimpleName());
         apply(new ComplaintRegisteredEvent(command.getAggregateIdentifier()));
     }
 
     @CommandHandler
-    public void handle(ReferToPurchaseCommand command/*, PurchaseResolver resolver*/) {
-//        Assert.notNull(resolver, () -> "Requires " + PurchaseResolver.class.getSimpleName());
+    public void handle(ReferToPurchaseCommand command, PurchaseResolver resolver) {
+        Assert.notNull(resolver, () -> "Requires " + PurchaseResolver.class.getSimpleName());
         apply(new PurchaseReferredToEvent(command.getAggregateIdentifier(), command.getPurchaseId()));
     }
 
