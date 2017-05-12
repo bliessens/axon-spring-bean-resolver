@@ -6,6 +6,6 @@ import org.springframework.stereotype.Component;
 class CustomerResolver {
 
     Customer resolve(String institute, String number) {
-        return new Customer(institute,number);
+        return new Customer(institute, number);
     }
 }

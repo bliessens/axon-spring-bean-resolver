@@ -1,7 +1,7 @@
 package be.cheops.axer;
 
-import be.cheops.axer.api.postprescription.RegisterComplaintCommand;
 import be.cheops.axer.api.postprescription.ReferToPurchaseCommand;
+import be.cheops.axer.api.postprescription.RegisterComplaintCommand;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;

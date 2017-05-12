@@ -7,8 +7,6 @@ import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.axonframework.commandhandling.gateway.DefaultCommandGateway;
 import org.axonframework.common.jpa.EntityManagerProvider;
 import org.axonframework.common.transaction.TransactionManager;
-import org.axonframework.eventhandling.EventBus;
-import org.axonframework.eventhandling.SimpleEventBus;
 import org.axonframework.eventsourcing.eventstore.EmbeddedEventStore;
 import org.axonframework.eventsourcing.eventstore.EventStorageEngine;
 import org.axonframework.eventsourcing.eventstore.EventStore;
@@ -79,11 +77,6 @@ class AxonConfiguration {
     @Bean
     public EventStore eventStore(EventStorageEngine eventStorageEngine) {
         return new EmbeddedEventStore(eventStorageEngine);
-    }
-
-    @Bean
-    public EventBus eventBus() {
-        return new SimpleEventBus(Integer.MAX_VALUE, NoOpMessageMonitor.INSTANCE);
     }
 
     @Bean

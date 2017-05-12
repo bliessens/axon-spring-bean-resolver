@@ -4,6 +4,7 @@ import org.axonframework.commandhandling.TargetAggregateIdentifier;
 
 public class RegisterComplaintCommand {
 
+    @TargetAggregateIdentifier
     private final String aggregateIdentifier;
 
     public RegisterComplaintCommand(String aggregateIdentifier) {
